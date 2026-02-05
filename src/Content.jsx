@@ -190,7 +190,7 @@ function Content() {
         return -1;
     }
 
-    return (<div id="content">
+    return (<main>
         <div id="darkener" ref={darkenerRef}></div>
         <div id="explanation-modal" ref={explanationModalRef}>
             <p id="explanation" ref={explanationTextRef}>Explanation here.</p>
@@ -237,7 +237,7 @@ function Content() {
         </table>
         <button style={{display: (showingResults ? "block" : "none")}} onClick={openAddIntModal}>Add Integer</button>
         <button style={{display: (showingResults ? "block" : "none")}} disabled={array.length === 1} onClick={openDeleteIntModal}>Delete Integer</button>
-    </div>
+    </main>
     );
 }
 
