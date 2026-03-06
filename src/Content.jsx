@@ -1,7 +1,24 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, createContext} from "react";
+import InitialScreen from "./InitialScreen";
+import ResultsScreen from "./ResultsScreen";
+
+export const ContentStateContext = createContext();
 
 function Content() {
     const [array, setArray] = useState([]);
+    const [showingResults, setShowingResults] = useState(false);
+
+    return (
+        <main>
+            <p id="array">[{array.toString()}]</p>
+            <ContentStateContext.Provider value={{array, setArray, setShowingResults}}>
+                {!showingResults && <InitialScreen />}
+                {showingResults && <ResultsScreen />}
+            </ContentStateContext.Provider>
+        </main>
+    );
+
+    /* const [array, setArray] = useState([]);
     const [showingResults, setShowingResults] = useState(false);
     const darkenerRef = useRef(null);
     const explanationModalRef = useRef(null);
@@ -103,12 +120,6 @@ function Content() {
         darkenerRef.current.classList.remove("active");
     }
 
-    function mean() {
-        let sum = 0;
-        for (let i = 0; i < array.length; i++) { sum += array[i]; }
-        return sum / array.length;
-    }
-
     function median() {
         let arrayCopy = []
         for (let i = 0; i < array.length; i++) { arrayCopy.push(array[i]); }
@@ -131,13 +142,6 @@ function Content() {
             if (array[i] < smallestValue) { smallestValue = array[i]; }
         }
         return largestValue - smallestValue;
-    }
-
-    function standardDeviation() {
-        const average = mean();
-        let sumOfSquaredDifferences = 0;
-        for (let i = 0; i < array.length; i++) { sumOfSquaredDifferences += Math.pow((array[i] - average), 2); }
-        return Math.sqrt(sumOfSquaredDifferences / array.length);
     }
 
     function __heapSort(arrayToSort) {
@@ -238,7 +242,7 @@ function Content() {
         <button style={{display: (showingResults ? "block" : "none")}} onClick={openAddIntModal}>Add Integer</button>
         <button style={{display: (showingResults ? "block" : "none")}} disabled={array.length === 1} onClick={openDeleteIntModal}>Delete Integer</button>
     </main>
-    );
+    ); */
 }
 
 export default Content

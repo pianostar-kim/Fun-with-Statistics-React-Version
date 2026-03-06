@@ -124,6 +124,23 @@ main button.accessible:disabled {
   margin: 10px 0;
 }
 
+table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+  width: 65%;
+}
+
+td {
+  text-align: right;
+}
+
+th span:hover {
+  background-color: pink;
+}
+
 /* Styles for modals and other related elements */
 
 #explanation-modal, #add-int-modal, #delete-int-modal {
