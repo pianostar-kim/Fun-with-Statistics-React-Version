@@ -5,6 +5,8 @@ import Statistics from "./statistics.js";
 function ResultsScreen() {
     const {array, setArray, setShowingResults} = useContext(ContentStateContext);
 
+    const formatter = new Intl.NumberFormat("en-US", {style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 4});
+
     return (
         <div>
             <h2>Results</h2>
@@ -13,7 +15,7 @@ function ResultsScreen() {
                 <tbody>
                     <tr>
                         <th><span>Mean</span></th>
-                        <td>{Statistics.mean(array)}</td>
+                        <td>{formatter.format(Statistics.mean(array))}</td>
                     </tr>
                     <tr>
                         <th><span>Median</span></th>
@@ -25,7 +27,7 @@ function ResultsScreen() {
                     </tr>
                     <tr>
                         <th><span>Standard deviation</span></th>
-                        <td>{Statistics.standardDeviation(array)}</td>
+                        <td>{formatter.format(Statistics.standardDeviation(array))}</td>
                     </tr>
                 </tbody>
             </table>
