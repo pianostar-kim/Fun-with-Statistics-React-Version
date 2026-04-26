@@ -57,6 +57,7 @@ main input {
   height: 30px;
   font-size: 16px;
   font-family: 'Questrial', sans-serif;
+  margin: 10px 0 5px 0;
 }
 
 main input.accessible {
@@ -120,8 +121,18 @@ main button.accessible:disabled {
   background-color: #505050;
 }
 
-#insert-button {
-  margin: 10px 0;
+#initial-screen, #results-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#initial-screen button:nth-child(3) {
+  margin: 5px 0 10px 0;
+}
+
+#results-screen p, #results-screen button:nth-child(4) {
+  margin: 10px 0 10px 0;
 }
 
 table {
@@ -131,10 +142,12 @@ table {
 th {
   text-align: left;
   width: 65%;
+  padding: 5px 0;
 }
 
 td {
   text-align: right;
+  padding: 5px 0;
 }
 
 th span:hover {
