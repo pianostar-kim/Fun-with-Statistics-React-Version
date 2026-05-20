@@ -2,7 +2,7 @@ import { useRef, useContext } from "react";
 import { ContentStateContext } from "./Content";
 
 function InitialScreen() {
-    const {array, setArray, setShowingResults} = useContext(ContentStateContext);
+    const {array, setArray, showingResults, setShowingResults} = useContext(ContentStateContext);
     const initialScreenInputElementRef = useRef(null);
 
 
@@ -18,12 +18,11 @@ function InitialScreen() {
     }
 
     function showResults() {
-        // document.getElementById("results").classList.remove("hidden");
         setShowingResults(true);
     }
 
     return (
-        <div id="initial-screen">
+        <div style={{display: showingResults ? "none" : "flex"}} id="initial-screen">
             <p>To get started, enter an integer to insert into an array of integers.</p>
             <input type="number" placeholder="Enter an integer here." ref={initialScreenInputElementRef} />
             <button onClick={insertNumber}>Insert</button>
