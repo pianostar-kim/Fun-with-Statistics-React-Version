@@ -23,7 +23,7 @@ function InitialScreen() {
     }
 
     return (
-        <div>
+        <div id="initial-screen">
             <p>To get started, enter an integer to insert into an array of integers.</p>
             <input type="number" placeholder="Enter an integer here." ref={initialScreenInputElementRef} />
             <button onClick={insertNumber}>Insert</button>

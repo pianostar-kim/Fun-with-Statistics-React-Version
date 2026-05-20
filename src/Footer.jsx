@@ -9,7 +9,7 @@ function Footer() {
             <br />
             <p>For issues or concerns regarding this web application, please <a href="mailto:pianostar.kim@gmail.com">send an email</a>.</p>
             <br />
-            <p>Last updated on: February 1, 2026</p>
+            <p>Last updated on: April 28, 2026</p>
         </footer>
     );
 }

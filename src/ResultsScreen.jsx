@@ -8,7 +8,7 @@ function ResultsScreen() {
     const formatter = new Intl.NumberFormat("en-US", {style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 4});
 
     return (
-        <div>
+        <div id="results-screen">
             <h2>Results</h2>
             <p>Click on one of the statistics terms (on the left side below) for its definition and how to calculate it.</p>
             <table>

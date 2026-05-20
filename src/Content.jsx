@@ -120,30 +120,6 @@ function Content() {
         darkenerRef.current.classList.remove("active");
     }
 
-    function median() {
-        let arrayCopy = []
-        for (let i = 0; i < array.length; i++) { arrayCopy.push(array[i]); }
-        __heapSort(arrayCopy);
-        if (arrayCopy.length % 2 !== 0) { return arrayCopy[(arrayCopy.length - 1) / 2]; }
-        else {
-            const leftValue = arrayCopy[arrayCopy.length / 2 - 1];
-            const rightValue = arrayCopy[arrayCopy.length / 2];
-            return (leftValue + rightValue) / 2;
-        }
-    }
-
-    function range() {
-        let largestValue = array[0];
-        for (let i = 1; i < array.length; i++) {
-            if (array[i] > largestValue) { largestValue = array[i]; }
-        }
-        let smallestValue = array[0];
-        for (let i = 1; i < array.length; i++) {
-            if (array[i] < smallestValue) { smallestValue = array[i]; }
-        }
-        return largestValue - smallestValue;
-    }
-
     function __heapSort(arrayToSort) {
         __buildMaxHeap(arrayToSort);
         for (let i = arrayToSort.length - 1; i > 0; i--) {
@@ -212,15 +188,9 @@ function Content() {
             <button id="delete-int-ok-button" onClick={deleteNumber}>OK</button>
             <button id="delete-int-cancel-button" onClick={closeDeleteIntModal}>Cancel</button>
         </div>
-        <p id="instructions" style={{display: (showingResults ? "none" : "block")}}>
-            {array.length === 0 ? "To get started, enter an integer to insert into an array of integers." : "Enter another integer, or, if you're done, press the Calculate! button."}
-        </p>
-        <p id="array">[{array.toString()}]</p>
         <input id="main-input" type="number" placeholder="Enter an integer here." style={{display: (showingResults ? "none" : "block")}} />
         <button id="insert-button" onClick={addNumber} style={{display: (showingResults ? "none" : "block")}}>Insert</button>
         <button disabled={array.length === 0} id="calculate-button" onClick={showResults} style={{display: (showingResults ? "none" : "block")}}>Calculate!</button>
-        <h2 style={{display: (showingResults ? "block" : "none")}}>Results</h2>
-        <p style={{display: (showingResults ? "block" : "none")}}>Click on one of the statistics terms (on the left side below) for its definition and how to calculate it.</p>
         <table style={{display: (showingResults ? "" : "none")}}>
             <tr>
                 <td className="term" onClick={() => provideExplanation(1)}>Mean</td>
