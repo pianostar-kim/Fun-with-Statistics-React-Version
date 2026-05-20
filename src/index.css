@@ -131,7 +131,6 @@ main button.accessible:disabled {
 }
 
 #initial-screen, #results-screen {
-  display: flex;
   flex-direction: column;
   align-items: center;
 }

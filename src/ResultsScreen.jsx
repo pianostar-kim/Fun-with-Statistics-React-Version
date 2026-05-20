@@ -3,12 +3,12 @@ import { ContentStateContext } from "./Content";
 import Statistics from "./statistics.js";
 
 function ResultsScreen() {
-    const {array, setArray, setShowingResults} = useContext(ContentStateContext);
+    const {array, setArray, showingResults, setShowingResults} = useContext(ContentStateContext);
 
     const formatter = new Intl.NumberFormat("en-US", {style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 4});
 
     return (
-        <div id="results-screen">
+        <div style={{display: showingResults ? "flex" : "none"}} id="results-screen">
             <h2>Results</h2>
             <p>Click on one of the statistics terms (on the left side below) for its definition and how to calculate it.</p>
             <table>

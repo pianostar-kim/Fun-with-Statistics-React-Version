@@ -11,9 +11,9 @@ function Content() {
     return (
         <main>
             <p id="array">[{array.toString()}]</p>
-            <ContentStateContext.Provider value={{array, setArray, setShowingResults}}>
-                {!showingResults && <InitialScreen />}
-                {showingResults && <ResultsScreen />}
+            <ContentStateContext.Provider value={{array, setArray, showingResults, setShowingResults}}>
+                <InitialScreen />
+                <ResultsScreen />
             </ContentStateContext.Provider>
         </main>
     );
