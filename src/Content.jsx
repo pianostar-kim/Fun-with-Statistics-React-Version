@@ -1,17 +1,22 @@
 import React, {useState, useRef, createContext} from "react";
 import InitialScreen from "./InitialScreen";
 import ResultsScreen from "./ResultsScreen";
+import ExplanationModal from "./ExplanationModal";
 
 export const ContentStateContext = createContext();
 
 function Content() {
     const [array, setArray] = useState([]);
     const [showingResults, setShowingResults] = useState(false);
+    const [isExplanationModalOpen, setIsExplanationModalOpen] = useState(false);
+    const [termToExplain, setTermToExplain] = useState("");
 
     return (
         <main>
             <p id="array">[{array.toString()}]</p>
-            <ContentStateContext.Provider value={{array, setArray, showingResults, setShowingResults}}>
+            <ContentStateContext.Provider
+                value={{array, setArray, showingResults, setShowingResults, isExplanationModalOpen, setIsExplanationModalOpen, termToExplain, setTermToExplain}}>
+                <ExplanationModal />
                 <InitialScreen />
                 <ResultsScreen />
             </ContentStateContext.Provider>
@@ -19,8 +24,6 @@ function Content() {
     );
 
     /* const [array, setArray] = useState([]);
-    const [showingResults, setShowingResults] = useState(false);
-    const darkenerRef = useRef(null);
     const explanationModalRef = useRef(null);
     const explanationTextRef = useRef(null);
     const addIntModalRef = useRef(null);
@@ -66,38 +69,6 @@ function Content() {
         }
     }
 
-    function showResults() {
-        setShowingResults(true);
-    }
-
-    function provideExplanation(explanationToProvide) {
-        switch (explanationToProvide) {
-            case 1:
-                explanationTextRef.current.textContent = "The mean is the number that all the numbers in a set gravitate towards. "
-                    + "To calculate it, first, add up all the numbers in the set. Then divide the resulting sum by the number of numbers in the set.";
-                break;
-            case 2:
-                explanationTextRef.current.textContent = "The median is the number that, when the set of numbers it comes from is ordered from least to greatest, is in the middle of that set."
-                    + " If there is an even number of numbers in the set, the median is the mean of the 2 numbers that are in the middle of the set when it is ordered from least to greatest.";
-                break;
-            case 3:
-                explanationTextRef.current.textContent = "The range of a set of numbers is the difference between its largest number and its smallest number.";
-                break;
-            default:
-                explanationTextRef.current.textContent = "The standard deviation is a general measure of how far away the numbers in a set are from the set's mean."
-                    + " To calculate it, first, for each of the numbers in the set, subtract from it the mean and square the resulting difference."
-                    + " Next, calculate the mean of the squared differences you obtained from the previous step."
-                    + " Then take the square root of the result you obtain from the previous step.";
-        }
-        explanationModalRef.current.classList.add("active");
-        darkenerRef.current.classList.add("active");
-    }
-
-    function closeExplanationModal() {
-        explanationModalRef.current.classList.remove("active");
-        darkenerRef.current.classList.remove("active");
-    }
-
     function openAddIntModal() {
         addIntModalRef.current.classList.add("active");
         darkenerRef.current.classList.add("active");
@@ -120,49 +91,6 @@ function Content() {
         darkenerRef.current.classList.remove("active");
     }
 
-    function __heapSort(arrayToSort) {
-        __buildMaxHeap(arrayToSort);
-        for (let i = arrayToSort.length - 1; i > 0; i--) {
-            __swap(arrayToSort, 0, i);
-            __siftDown(arrayToSort, 0, i - 1);
-        }
-    }
-    
-    function __swap(array, index1, index2) {
-        const placeholder = array[index1];
-        array[index1] = array[index2];
-        array[index2] = placeholder;
-    }
-    
-    function __buildMaxHeap(array) {
-        for (let i = Math.floor((array.length - 2) / 2); i >= 0; i--) { __siftDown(array, i, array.length - 1); }
-    }
-    
-    function __siftDown(array, startIndex, endIndex) {
-        let i = startIndex;
-        while (2 * i + 1 <= endIndex) {
-    
-            // index i has 2 children
-            if (2 * i + 2 <= endIndex) {
-                if (array[i] < array[2 * i + 1] || array[i] < array[2 * i + 2]) {
-                    const idxToSwapWith = array[2 * i + 1] >= array[2 * i + 2] ? 2 * i + 1 : 2 * i + 2;
-                    __swap(array, i, idxToSwapWith);
-                    i = idxToSwapWith;
-                }
-                else { break; }
-            }
-    
-            // index i has only 1 child
-            else {
-                if (array[i] < array[2 * i + 1]) {
-                    __swap(array, i, 2 * i + 1);
-                    i = 2 * i + 1;
-                }
-                else { break; }
-            }
-        }
-    }
-
     function __findFirstIdxOfNumber(array, numberBeingSearchedFor) {
         for (let i = 0; i < array.length; i++) {
             if (array[i] === numberBeingSearchedFor) { return i; }
@@ -171,11 +99,6 @@ function Content() {
     }
 
     return (<main>
-        <div id="darkener" ref={darkenerRef}></div>
-        <div id="explanation-modal" ref={explanationModalRef}>
-            <p id="explanation" ref={explanationTextRef}>Explanation here.</p>
-            <button onClick={closeExplanationModal}>Close</button>
-        </div>
         <div id="add-int-modal" ref={addIntModalRef}>
             <p>Enter the integer you would like to add. The integer you enter will get added at the end of the array.</p>
             <input id="add-int-input" type="number" placeholder="Enter the integer here." />
@@ -191,24 +114,6 @@ function Content() {
         <input id="main-input" type="number" placeholder="Enter an integer here." style={{display: (showingResults ? "none" : "block")}} />
         <button id="insert-button" onClick={addNumber} style={{display: (showingResults ? "none" : "block")}}>Insert</button>
         <button disabled={array.length === 0} id="calculate-button" onClick={showResults} style={{display: (showingResults ? "none" : "block")}}>Calculate!</button>
-        <table style={{display: (showingResults ? "" : "none")}}>
-            <tr>
-                <td className="term" onClick={() => provideExplanation(1)}>Mean</td>
-                <td className="value">{formatter.format(mean())}</td>
-            </tr>
-            <tr>
-                <td className="term" onClick={() => provideExplanation(2)}>Median</td>
-                <td className="value">{formatter.format(median())}</td>
-            </tr>
-            <tr>
-                <td className="term" onClick={() => provideExplanation(3)}>Range</td>
-                <td className="value">{range()}</td>
-            </tr>
-            <tr>
-                <td className="term" onClick={() => provideExplanation(4)}>Standard deviation</td>
-                <td className="value">{formatter.format(standardDeviation())}</td>
-            </tr>
-        </table>
         <button style={{display: (showingResults ? "block" : "none")}} onClick={openAddIntModal}>Add Integer</button>
         <button style={{display: (showingResults ? "block" : "none")}} disabled={array.length === 1} onClick={openDeleteIntModal}>Delete Integer</button>
     </main>
