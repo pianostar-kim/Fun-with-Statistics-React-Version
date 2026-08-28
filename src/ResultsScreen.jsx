@@ -3,9 +3,14 @@ import { ContentStateContext } from "./Content";
 import Statistics from "./statistics.js";
 
 function ResultsScreen() {
-    const {array, setArray, showingResults, setShowingResults} = useContext(ContentStateContext);
+    const {array, setArray, showingResults, setShowingResults, isExplanationModalOpen, setIsExplanationModalOpen, termToExplain, setTermToExplain} = useContext(ContentStateContext);
 
     const formatter = new Intl.NumberFormat("en-US", {style: "decimal", minimumFractionDigits: 0, maximumFractionDigits: 4});
+
+    function openExplanationModal(termToExplain) {
+        setIsExplanationModalOpen(true);
+        setTermToExplain(termToExplain);
+    }
 
     return (
         <div style={{display: showingResults ? "flex" : "none"}} id="results-screen">
@@ -14,19 +19,19 @@ function ResultsScreen() {
             <table>
                 <tbody>
                     <tr>
-                        <th><span>Mean</span></th>
+                        <th><span onClick={() => openExplanationModal(Statistics.meanTerm)}>Mean</span></th>
                         <td>{formatter.format(Statistics.mean(array))}</td>
                     </tr>
                     <tr>
-                        <th><span>Median</span></th>
+                        <th><span onClick={() => openExplanationModal(Statistics.medianTerm)}>Median</span></th>
                         <td>{Statistics.median(array)}</td>
                     </tr>
                     <tr>
-                        <th><span>Range</span></th>
+                        <th><span onClick={() => openExplanationModal(Statistics.rangeTerm)}>Range</span></th>
                         <td>{Statistics.range(array)}</td>
                     </tr>
                     <tr>
-                        <th><span>Standard deviation</span></th>
+                        <th><span onClick={() => openExplanationModal(Statistics.standardDeviationTerm)}>Standard deviation</span></th>
                         <td>{formatter.format(Statistics.standardDeviation(array))}</td>
                     </tr>
                 </tbody>
